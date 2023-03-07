@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './Counter.css';
-import { Increment, decrement, RESET } from '../../Services/Action/Counter.Action';
+import { Increment, decrement, RESET, IncrementAsync, decrementAsync } from '../../Services/Action/Counter.Action';
 
 function Counter() {
-    const count = useSelector((state) => state.IncDsc);
+    const { count } = useSelector((state) => state.IncDsc);
+    const { isLoading } = useSelector((state) => state.IncDsc);
     const dispatch = useDispatch();
 
     return (
@@ -11,19 +12,21 @@ function Counter() {
             <div className='container'>
                 <div className='row'>
                     <div className='w-3'>
-                        <button onClick={() => dispatch(Increment())}>
+                        <button onClick={() => dispatch(IncrementAsync())}>
                             +
                         </button>
                     </div>
                     <div className='w-3'>
-                        <h2>
-                            {
-                                count
-                            }
-                        </h2>
+                        {
+                            isLoading ? <h2>Loading....</h2> : <h3>
+                                {
+                                    count
+                                }
+                            </h3>
+                        }
                     </div>
                     <div className='w-3'>
-                        <button onClick={() => dispatch(decrement())}>
+                        <button onClick={() => dispatch(decrementAsync())}>
                             -
                         </button>
                     </div>
